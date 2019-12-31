@@ -28,8 +28,10 @@ public final class LogFactory {
    */
   public static final String MARKER = "MYBATIS";
 
+  /*被选定的第三方日志组件适配器的构造方法*/
   private static Constructor<? extends Log> logConstructor;
 
+  // 自动扫描日志实现，并且第三方日志插件加载优先级如下：slf4jLogging -> commonsLogging -> sog4J2Logging -> log4JLogging -> jdkLogging
   static {
     tryImplementation(LogFactory::useSlf4jLogging);
     tryImplementation(LogFactory::useCommonsLogging);

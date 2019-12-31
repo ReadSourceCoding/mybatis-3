@@ -81,10 +81,14 @@ public class SimpleExecutor extends BaseExecutor {
     return Collections.emptyList();
   }
 
+  /** 创建 Statement */
   private Statement prepareStatement(StatementHandler handler, Log statementLog) throws SQLException {
     Statement stmt;
+    // 获取 connection 对象的动态代理，添加日志能力
     Connection connection = getConnection(statementLog);
+    // 通过不同的 StatementHandler，利用 connectionc 创建（prepare）Statement
     stmt = handler.prepare(connection, transaction.getTimeout());
+    // 利用 parameterHandler 处理占位符
     handler.parameterize(stmt);
     return stmt;
   }
